@@ -8,8 +8,6 @@ class Task extends Model
 {
 	protected $fillable = ['name', 'description', 'start_time', 'end_time'];
 
-	public function projects()
-	{
 		public function status()
 		{
 			return $this->hasOne(Status::class);
@@ -24,5 +22,4 @@ class Task extends Model
 		{
 			return $this->belongsTo(Member::class);
 		}
-	}
 }

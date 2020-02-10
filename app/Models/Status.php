@@ -12,7 +12,7 @@ class Status extends Model
 		return $this->belongsTo(Project::class);
 	}
 
-	 public function projects()
+	 public function tasks()
 	{
 		return $this->belongsTo(Task::class);
 	}
