@@ -13,12 +13,12 @@ class Task extends Model
 			return $this->hasOne(Status::class);
 		}
 
-		public function projects()
+		public function project()
 		{
 			return $this->belongsTo(Project::class);
 		}
 
-		public function members()
+		public function member()
 		{
 			return $this->belongsTo(Member::class);
 		}

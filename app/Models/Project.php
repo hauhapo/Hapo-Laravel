@@ -13,7 +13,7 @@ class Project extends Model
 		return $this->belongsToMany(Member::class);
 	}
 
-	public function customers()
+	public function customer()
 	{
 		return $this->belongsTo(Customer::class);
 	}

@@ -5,15 +5,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Status extends Model
 {
+	protected $table = 'statuses';
+
     protected $fillable = ['name'];
 
     public function projects()
 	{
-		return $this->belongsTo(Project::class);
+		return $this->hasMany(Project::class);
 	}
 
 	 public function tasks()
 	{
-		return $this->belongsTo(Task::class);
+		return $this->hasMany(Task::class);
 	}
 }
