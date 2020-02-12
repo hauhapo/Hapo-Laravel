@@ -17,11 +17,13 @@ class CreateMembersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 255);
             $table->string('email', 255)->unique();
-            $table->string('phone', 255);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+            $table->string('phone', 15);
             $table->string('image', 255);
             $table->string('address', 255);
             $table->string('password', 255);
-            $table->string('account', 255);
+            $table->integer('is_admin');
             $table->timestamps();
         });
     }

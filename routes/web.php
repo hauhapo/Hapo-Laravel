@@ -15,8 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('members','MemberController');
-Route::resource('projects','ProjectController');
-Route::resource('customers','MemberController');
-Route::resource('tasks','TaskController');
-Route::resource('status','StatusController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
