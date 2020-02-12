@@ -23,7 +23,7 @@ class CreateMembersTable extends Migration
             $table->string('image', 255);
             $table->string('address', 255);
             $table->string('password', 255);
-            $table->integer('is_admin');
+            $table->tinyInteger('is_admin');
             $table->timestamps();
         });
     }
