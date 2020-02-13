@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/member', 'MemberController@index')->name('member');
+
+//Route::get('/member', function (){
+//    return view('Members.index');
+//});
+
+//Route::resource('members', 'MemberController');
