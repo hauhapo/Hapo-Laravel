@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Member;
-use App\Members;
+use App\http\Requests\MemberRequest;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -14,7 +14,9 @@ class MemberController extends Controller
      */
     public function index()
     {
-        //
+        
+        $Members = Member::all();
+        return view('members.index',compact('Members'));
     }
 
     /**
@@ -24,7 +26,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        //
+        return view('members.create');
     }
 
     /**
@@ -35,7 +37,10 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Member::create($request->all());
+
+        return redirect()->route('members.index')
+            ->with('success','Member created successfully.');
     }
 
     /**
@@ -44,11 +49,7 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function show(Member $member)
-    {
-        //
-    }
-
+   
     /**
      * Show the form for editing the specified resource.
      *
@@ -57,7 +58,7 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        //
+        return view('members.edit',compact('member'));
     }
 
     /**
@@ -67,9 +68,12 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Member $member)
+    public function update(MemberRequest $request, Member $member)
     {
-        //
+        $member->update($request->all());
+
+        return redirect()->route('members.index')
+            ->with('success','Member updated successfully');
     }
 
     /**
@@ -80,6 +84,9 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
-        //
+       $member->delete();
+
+        return redirect()->route('members.index')
+            ->with('success','Member deleted successfully');
     }
 }
