@@ -93,7 +93,10 @@
                             <label for="is_admin" class="col-md-4 col-form-label text-md-right">{{ __('is_admin') }}</label>
 
                             <div class="col-md-6">
-                                <select name="is_admin" type="number" class="form-control @error('is_admin') is-invalid @enderror" name="is_admin" value="{{ old('is_admin') }}" required autocomplete="is_admin" autofocus></select>
+                                <select name="is_admin" type="number" class="form-control @error('is_admin') is-invalid @enderror" name="is_admin" value="{{ old('is_admin') }}" required autocomplete="is_admin" autofocus>
+                                    <option value="0">User</option>
+                                    <option value="1">Admin</option>
+                                </select>
                                 @error('is_admin')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

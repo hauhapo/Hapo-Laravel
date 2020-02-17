@@ -15,12 +15,12 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('image', 255);
             $table->string('name', 255);
             $table->string('email', 255)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->string('phone', 15);
-            $table->string('image', 255);
             $table->string('address', 255);
             $table->string('password', 255);
             $table->tinyInteger('is_admin');
