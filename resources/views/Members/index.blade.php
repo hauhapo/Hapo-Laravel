@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
+<div class="pull-right">
+    <a class="btn btn-success" href="{{ route('members.create') }}"> Add Members</a>
+</div>
+
     <div class="table-responsive">
         <table class="table table-bordered">
             <tr class="bg-dark-gradient">
@@ -32,7 +36,7 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" class="btn btn-default">Delete</button>
+                                <a class="btn btn-default">Delete</a>
                                 </form>
                             </div>
                         </div>
@@ -40,5 +44,7 @@
                 </tr>
             @endforeach
         </table>
+        {{ $Members->links() }}
+        
     </div>
 @endsection

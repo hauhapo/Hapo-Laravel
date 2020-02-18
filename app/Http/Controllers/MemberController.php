@@ -14,9 +14,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        
-        $Members = Member::all();
-        return view('members.index',compact('Members'));
+        $Members = Member::paginate(2);
+        return view('members.index', compact('Members'));
     }
 
     /**
@@ -58,7 +57,7 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        return view('members.edit',compact('member'));
+        return view('members.edit', compact('member'));
     }
 
     /**
