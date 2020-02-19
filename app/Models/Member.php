@@ -1,12 +1,46 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Http\Requests;
 
 class Member extends Authenticatable
 {
+    public function scopeSearch($query, $request)
+    {
+        return $query->searchName($request)
+            ->searchEmail($request)
+            ->searchPhone($request);
+    }
+
+    public function scopeSearchName($query, $request)
+    {
+        return $query->where('name', 'like', '%' . $request->searchName . '%');
+    }
+
+    public function scopeSearchEmail($query, $request)
+    {
+        return $query->where('email', 'like', '%' . $request->searchEmail . '%');
+    }
+
+    public function scopeSearchPhone($query, $request)
+    {
+        return $query->where('phone', 'like', '%' . $request->searchPhone . '%');
+    }
+
+    public function scopeSearchRole($query, $request)
+    {
+        if (!empty($request->searchPermission)) {
+            return $query->where('is_admin', $request->searchPosition);
+        }
+    }
+    const IS_ADMIN = [
+        0 => 'User',
+        1 => 'Admin'
+    ];
     protected $fillable = ['name', 'image', 'email', 'phone', 'address', 'password', 'is_admin'];
 
     protected $hidden = [
@@ -25,5 +59,10 @@ class Member extends Authenticatable
     public function projects()
     {
         return $this->hasMany(Project::class, 'member_project');
+    }
+
+    public function getIsAdminLabelAttribute()
+    {
+        return self::IS_ADMIN[$this->is_admin];
     }
 }

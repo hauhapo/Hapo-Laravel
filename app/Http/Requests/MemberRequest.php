@@ -24,13 +24,13 @@ class MemberRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
-            'image' => 'required',
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-            'is_admin' => 'required',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'max:15'],
+            'address' => ['required', 'string', 'max:255'],
+            'image' => ['required', 'string', 'max:255'],
+            'is_admin' => ['required', 'integer'],
+            'password' => ['nullable', 'string', 'min:1', 'confirmed'],
         ];
     }
 }

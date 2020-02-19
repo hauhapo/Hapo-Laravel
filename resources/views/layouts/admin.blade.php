@@ -11,11 +11,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>Admin</title>
-    <link rel="stylesheet" href="{{asset('plugins/font-awesome/css/font-awesome.css')}}">
-    <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ mix('/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/font-awesome/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('dist/css/adminlte.css')}}">
-   
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -103,7 +103,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Hau Nguyen</a>
+                        <a href="#" class="d-block">ROBOT</a>
                     </div>
                 </div>
 
@@ -200,10 +200,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    <!-- AdminLTE App -->
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
 </body>
 

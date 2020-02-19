@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<form action="{{ route('members.store') }}" method="POST">
+<form action="{{ route('members.store') }}" enctype="multipart/form-data">
 
     @csrf
 
@@ -106,8 +106,9 @@
         <div class="col-md-6">
             <select name="is_admin" type="number" class="form-control @error('is_admin') is-invalid @enderror"
                 name="is_admin" value="{{ old('is_admin') }}" required autocomplete="is_admin" autofocus>
-                <option value="0">User</option>
-                <option value="1">Admin</option>
+                @foreach (App\Models\Member::IS_ADMIN as $key => $label)
+                <option value="{{ $key }}">{{ $label }}</option>
+                @endforeach
             </select>
             @error('is_admin')
             <span class="invalid-feedback" role="alert">

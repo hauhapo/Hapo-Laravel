@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/search', 'MemberController@index')->name('members.search');
 Route::get('/member', 'MemberController@index')->name('member');
 Route::get('/member', 'MemberController@index')->name('members.update');
 Route::resource('members', 'MemberController');
