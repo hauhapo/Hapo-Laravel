@@ -2,46 +2,40 @@
 
 @section('content')
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <br>
-    <div class="d-flex">
-        <form class="form-inline" method="get" action="{{ route('members.search') }}">
-            <div class="input-group input-group-sm">
-                <table>
-                    <th><input class="form-control" type="text" placeholder="Name" aria-label="Search"
-                            name="searchName"></th>
-                    <th><input class="form-control" type="text" placeholder="Email" aria-label="Search"
-                            name="searchEmail"></th>
-                    <th><input class="form-control" type="text" placeholder="Phone" aria-label="Search"
-                            name="searchPhone"></th>
-                    <th>
-                        <select name="searchPosition"
-                            class="form-control col-auto @error('is_admin') is-invalid @enderror"
-                            value="{{ old('is_admin') }}" autocomplete="is_admin">
-                            <option value=""></option>
-                            @foreach (App\Models\Member::IS_ADMIN as $key => $label)
-                            <option value="{{ $key }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                    </th>
-                    <th>
-                        <button type="submit" class="btn btn-outline-primary"> <i class="fa fa-search"></i> Search</button>
-                    </th>
-                </table>
-            </div>
-        </form>
-    </div>
+<div class="d-flex">
+    <form class="form-inline" method="get" action="{{ route('members.search') }}">
 
+        <input class="form-control" type="text" placeholder="Name" aria-label="Search" name="searchName"></th>
+        <input class="form-control" type="text" placeholder="Email" aria-label="Search" name="searchEmail"></th>
+        <input class="form-control" type="text" placeholder="Phone" aria-label="Search" name="searchPhone"></th>
 
+        <select name="searchRole" class="form-control col-auto @error('is_admin') is-invalid @enderror"
+            value="{{ old('is_admin') }}" autocomplete="is_admin">
+            <option value="" disabled selected hidden>Role</option>
+            @foreach (App\Models\Member::IS_ADMIN as $key => $value)
+            <option placeholder="Role" value="{{ $key }}" @if(request('searchRole') == $key) selected @endif>{{ $value }}</option>
+            @endforeach
+        </select>
+
+        <button type="submit" class="btn btn-outline-primary"> <i class="fa fa-search"></i>
+            Search</button>
+    </form>
 </div>
+
+
 <div class="d-flex justify-content-end">
     <a class="btn btn-success" href="{{ route('members.create') }}"> Add Members</a>
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;
+        </a> {{ session('success') }}
+    </div>
+    @endif
 </div>
 
 <div class="table-responsive">
     <table class="table table-bordered">
         <tr class="bg-dark-gradient">
-            <th>ID</th>
             <th>Image</th>
             <th>Name</th>
             <th>Email</th>
@@ -52,13 +46,12 @@
         </tr>
         @foreach($members as $row)
         <tr>
-            <td>{{ $row->id }}</td>
-            <td>{{ $row->image }}</td>
+            <td><img class="w-75" src="{{ asset("storage/images/$row->image") }}" style="width: 100px; height: 50px; object-fit: contain;" alt = "avatar"></td>
             <td>{{ $row->name }}</td>
             <td>{{ $row->email }}</td>
             <td>{{ $row->phone }}</td>
             <td>{{$row->address}}</td>
-            <td>{{$row->is_admin_label }}</td>
+            <td>{{$row->is_admin_label}}</td>
             <td>
                 <div class="d-flex justify-content-center">
                     <div>
@@ -77,6 +70,9 @@
         </tr>
         @endforeach
     </table>
-    {{ $members->links() }}
+    <div class="d-flex justify-content-end">
+        {{ $members->appends($_GET)->links() }}
+    </div>
+</div>
 </div>
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Member;
 use App\Http\Requests\MemberRequest;
 use Illuminate\Http\Request;
@@ -16,8 +17,8 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $members = Member::search($request)
-        ->searchRole($request)
-        ->paginate(config('app.pagination'));
+            ->searchRole($request)
+            ->paginate(config('app.pagination'));
         return view('members.index', ['members' => $members]);
     }
 
@@ -29,6 +30,7 @@ class MemberController extends Controller
     public function create()
     {
         return view('members.create');
+        
     }
 
     /**
@@ -39,29 +41,33 @@ class MemberController extends Controller
      */
     public function store(MemberRequest $request)
     {
-        $member = $request->all();
         
-        $member['password'] = Hash::make($member['password']);
-        Member::create($member);
-        return redirect()->route('members.index');
+        $data = $request->all();
+        $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs('public/images', $imageMem);
+        $data['image'] = $imageMem;
+        $data['password'] = Hash::make($data['password']);
+        
+        Member::create($data);
+       
+        return redirect()->route('members.index')->with('success', __('messages.create'));
     }
-
     /**
      * Display the specified resource.
      *
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-   
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(Member $member)
+    public function edit($id)
     {
-        return view('members.edit', compact('member'));
+        return view('members.edit')->with('members', Member::findOrFail($id));
     }
 
     /**
@@ -73,10 +79,17 @@ class MemberController extends Controller
      */
     public function update(MemberRequest $request)
     {
-        $member = $request->all();
-        $member->update($request->all());
+        $data = $request->all();
+        $imageMem = $request->hidden_image;
+        $image = $request->file('image');
+        if ($image != '') {
+            $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->storeAs('/public/images', $imageMem);
+            $data['image'] = $imageMem;
+        }
 
-        return redirect()->route('members.index');  
+        Member::findOrFail()->update($data);
+        return redirect()->route('members.index')->with('success', __('messages.update'));
     }
 
     /**
@@ -85,10 +98,10 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Member $member)
+    public function destroy($id)
     {
-       $member->delete();
-
-        return redirect()->route('members.index');
+        $member = Member::findOrFail($id);
+        $member->delete();	        
+        return redirect()->route('member.index')->with('success', __('messages.destroy'));
     }
 }

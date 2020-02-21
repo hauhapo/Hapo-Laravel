@@ -68,14 +68,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Member::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'address' => $data['address'],
-            'image' => $data['image'],
-            'is_admin' => $data['is_admin'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs('/public/images', $imageMem);
+        $data['image'] = $imageMem;
+        $data['password'] = Hash::make($data['password']);
+        $user = Member::create($data);
+
+        return $user;
     }
 }

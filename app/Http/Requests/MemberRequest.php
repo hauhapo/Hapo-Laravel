@@ -28,9 +28,9 @@ class MemberRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:15'],
             'address' => ['required', 'string', 'max:255'],
-            'image' => ['required', 'string', 'max:255'],
+            'image' => ['required', 'image', 'max:2048'],
             'is_admin' => ['required', 'integer'],
-            'password' => ['nullable', 'string', 'min:1', 'confirmed'],
+            'password' => ['required', 'string', 'min:1', 'confirmed'],
         ];
     }
 }

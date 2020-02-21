@@ -13,7 +13,8 @@ class Member extends Authenticatable
     {
         return $query->searchName($request)
             ->searchEmail($request)
-            ->searchPhone($request);
+            ->searchPhone($request)
+            ->searchRole($request);
     }
 
     public function scopeSearchName($query, $request)
@@ -33,14 +34,16 @@ class Member extends Authenticatable
 
     public function scopeSearchRole($query, $request)
     {
-        if (!empty($request->searchPermission)) {
-            return $query->where('is_admin', $request->searchPosition);
+        if (!empty($request->searchRole)) {
+            return $query->where('is_admin', $request->searchRole);
         }
     }
+    
     const IS_ADMIN = [
         0 => 'User',
         1 => 'Admin'
     ];
+
     protected $fillable = ['name', 'image', 'email', 'phone', 'address', 'password', 'is_admin'];
 
     protected $hidden = [

@@ -2,20 +2,11 @@
 
 @section('content')
 
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
 <div align="right">
     <a href="{{ route('members.index') }}" class="btn btn-warning">Back</a>
 </div>
 <br />
-<form method="post" action="{{ route('members.update', $member->first()->id) }}" enctype="multipart/form-members">
+<form method="post" action="{{ route('members.update', $members->first()->id) }}" enctype="multipart/form-members">
     @csrf
     @method('PATCH')
     <div class="form-group row">
@@ -23,7 +14,7 @@
 
         <div class="col-md-6">
             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                value="{{ $member->name }}" required autocomplete="name" autofocus>
+                value="{{ $members->name }}" required autocomplete="name" autofocus>
 
             @error('name')
             <span class="invalid-feedback" role="alert">
@@ -38,7 +29,7 @@
 
         <div class="col-md-6">
             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                value="{{ $member->email }}" required autocomplete="email">
+                value="{{ $members->email }}" required autocomplete="email">
 
             @error('email')
             <span class="invalid-feedback" role="alert">
@@ -67,7 +58,7 @@
         <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
         <div class="col-md-6">
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" 
+            <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
                 autocomplete="new-password">
         </div>
     </div>
@@ -77,7 +68,7 @@
 
         <div class="col-md-6">
             <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
-                value="{{ $member->phone }}" required autocomplete="phone" autofocus>
+                value="{{ $members->phone }}" required autocomplete="phone" autofocus>
 
             @error('phone')
             <span class="invalid-feedback" role="alert">
@@ -92,7 +83,7 @@
 
         <div class="col-md-6">
             <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address"
-                value="{{ $member->address }}" required autocomplete="address" autofocus>
+                value="{{ $members->address }}" required autocomplete="address" autofocus>
 
             @error('address')
             <span class="invalid-feedback" role="alert">
@@ -107,7 +98,7 @@
 
         <div class="col-md-6">
             <select name="is_admin" type="number" class="form-control @error('is_admin') is-invalid @enderror"
-                name="is_admin" value="{{ $member->is_admin }}" required autocomplete="is_admin" autofocus>
+                name="is_admin" value="{{ $members->is_admin }}" required autocomplete="is_admin" autofocus>
                 @foreach (App\Models\Member::IS_ADMIN as $key => $label)
                 <option value="{{ $key }}">{{ $label }}</option>
                 @endforeach
@@ -124,8 +115,10 @@
         <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
 
         <div class="col-md-6">
-            <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"
-                value="{{ $member->image }}" required autocomplete="image" autofocus>
+            <input id="email" type="file" class="form-control-file @error('image') is-invalid @enderror" name="image"
+                value="" autocomplete="image">
+            <img class="w-25" src="{{ asset("storage/images/$members->image") }}" alt="image" />
+            <input type="hidden" name="hidden_image" value="{{ $members->image }}">
 
             @error('image')
             <span class="invalid-feedback" role="alert">
@@ -139,5 +132,4 @@
         <input type="submit" name="edit" class="btn btn-primary input-lg" value="Edit" />
     </div>
 </form>
-
 @endsection
