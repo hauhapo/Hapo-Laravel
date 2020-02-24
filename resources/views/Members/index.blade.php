@@ -22,7 +22,6 @@
     </form>
 </div>
 
-
 <div class="d-flex justify-content-end">
     <a class="btn btn-success" href="{{ route('members.create') }}"> Add Members</a>
     @if (session('success'))
