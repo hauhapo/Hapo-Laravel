@@ -6,7 +6,7 @@
     <a href="{{ route('members.index') }}" class="btn btn-warning">Back</a>
 </div>
 <br />
-<form method="post" action="{{ route('members.update', $members->first()->id) }}" enctype="multipart/form-members">
+<form method="post" action="{{ route('members.update', $member->id) }}" enctype="multipart/form-members">
     @csrf
     @method('PATCH')
     <div class="form-group row">
@@ -14,7 +14,7 @@
 
         <div class="col-md-6">
             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                value="{{ $members->name }}" required autocomplete="name" autofocus>
+                value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="name" autofocus>
 
             @error('name')
             <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
 
         <div class="col-md-6">
             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                value="{{ $members->email }}" required autocomplete="email">
+                value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="email">
 
             @error('email')
             <span class="invalid-feedback" role="alert">
@@ -68,7 +68,7 @@
 
         <div class="col-md-6">
             <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
-                value="{{ $members->phone }}" required autocomplete="phone" autofocus>
+                value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="phone" autofocus>
 
             @error('phone')
             <span class="invalid-feedback" role="alert">
@@ -83,7 +83,7 @@
 
         <div class="col-md-6">
             <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address"
-                value="{{ $members->address }}" required autocomplete="address" autofocus>
+                value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="address" autofocus>
 
             @error('address')
             <span class="invalid-feedback" role="alert">
@@ -98,7 +98,7 @@
 
         <div class="col-md-6">
             <select name="is_admin" type="number" class="form-control @error('is_admin') is-invalid @enderror"
-                name="is_admin" value="{{ $members->is_admin }}" required autocomplete="is_admin" autofocus>
+                name="is_admin" value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="is_admin" autofocus>
                 @foreach (App\Models\Member::IS_ADMIN as $key => $label)
                 <option value="{{ $key }}">{{ $label }}</option>
                 @endforeach
@@ -117,8 +117,8 @@
         <div class="col-md-6">
             <input id="email" type="file" class="form-control-file @error('image') is-invalid @enderror" name="image"
                 value="" autocomplete="image">
-            <img class="w-25" src="{{ asset("storage/images/$members->image") }}" alt="image" />
-            <input type="hidden" name="hidden_image" value="{{ $members->image }}">
+            <img class="w-25" src="{{ asset("storage/images/$member->image") }}" alt="image" />
+            <input type="hidden" name="hidden_image" value="{{ (old('name')) ? old('name') : $member->name }}">
 
             @error('image')
             <span class="invalid-feedback" role="alert">

@@ -105,9 +105,10 @@
 
         <div class="col-md-6">
             <select name="is_admin" type="number" class="form-control @error('is_admin') is-invalid @enderror"
-                name="is_admin" value="{{ old('is_admin') }}" required autocomplete="is_admin" autofocus>
+                value="{{ old ('is_admin') }}" required autocomplete="is_admin" autofocus>
                 @foreach (App\Models\Member::IS_ADMIN as $key => $label)
-                <option value="{{ $key }}">{{ $label }}</option>
+                <option value="{{ $key }}" @if (old('is_admin')=='key') selected @endif>{{ $label }}
+                </option>
                 @endforeach
             </select>
             @error('is_admin')

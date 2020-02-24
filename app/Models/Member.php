@@ -9,6 +9,11 @@ use Illuminate\Http\Requests;
 
 class Member extends Authenticatable
 {
+    const IS_ADMIN = [
+        0 => 'User',
+        1 => 'Admin'
+    ];
+
     public function scopeSearch($query, $request)
     {
         return $query->searchName($request)
@@ -38,11 +43,6 @@ class Member extends Authenticatable
             return $query->where('is_admin', $request->searchRole);
         }
     }
-    
-    const IS_ADMIN = [
-        0 => 'User',
-        1 => 'Admin'
-    ];
 
     protected $fillable = ['name', 'image', 'email', 'phone', 'address', 'password', 'is_admin'];
 

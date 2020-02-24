@@ -30,7 +30,6 @@ class MemberController extends Controller
     public function create()
     {
         return view('members.create');
-        
     }
 
     /**
@@ -41,15 +40,15 @@ class MemberController extends Controller
      */
     public function store(MemberRequest $request)
     {
-        
+
         $data = $request->all();
         $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
         request()->image->storeAs('public/images', $imageMem);
         $data['image'] = $imageMem;
         $data['password'] = Hash::make($data['password']);
-        
+
         Member::create($data);
-       
+
         return redirect()->route('members.index')->with('success', __('messages.create'));
     }
     /**
@@ -67,7 +66,7 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        return view('members.edit')->with('members', Member::findOrFail($id));
+        return view('members.edit')->with('member', Member::findOrFail($id));
     }
 
     /**
@@ -80,12 +79,17 @@ class MemberController extends Controller
     public function update(MemberRequest $request)
     {
         $data = $request->all();
-        $imageMem = $request->hidden_image;
         $image = $request->file('image');
         if ($image != '') {
             $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
             request()->image->storeAs('/public/images', $imageMem);
             $data['image'] = $imageMem;
+        }
+        
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
         }
 
         Member::findOrFail()->update($data);
@@ -101,7 +105,7 @@ class MemberController extends Controller
     public function destroy($id)
     {
         $member = Member::findOrFail($id);
-        $member->delete();	        
+        $member->delete();
         return redirect()->route('member.index')->with('success', __('messages.destroy'));
     }
 }

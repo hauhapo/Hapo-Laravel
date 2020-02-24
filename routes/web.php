@@ -17,8 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::resource('members', 'MemberController', );
-
 Route::prefix('members')->name('members.')->group(function() {
     Route::get('search', 'MemberController@index')->name('search');
 });
