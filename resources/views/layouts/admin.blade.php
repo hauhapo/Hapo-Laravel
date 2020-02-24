@@ -198,9 +198,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-    <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('dist/js/adminlte.min.js')}}"></script>
-    <script type="{{ mix('/js/app.js')}}"></script>
+    <script type="{{ mix('/js/app.js') }}"></script>
 </body>
 
 </html>
