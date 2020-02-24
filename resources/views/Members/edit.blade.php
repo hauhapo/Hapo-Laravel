@@ -100,7 +100,8 @@
             <select name="is_admin" type="number" class="form-control @error('is_admin') is-invalid @enderror"
                 name="is_admin" value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="is_admin" autofocus>
                 @foreach (App\Models\Member::IS_ADMIN as $key => $label)
-                <option value="{{ $key }}">{{ $label }}</option>
+                {{-- <option value="{{ $key }}">{{ $label }}</option> --}}
+                <option value="{{ $key }}" @if(old('is_admin') == $key) selected @elseif($member->is_admin == $key) selected @endif>{{ $label }}</option>
                 @endforeach
             </select>
             @error('is_admin')

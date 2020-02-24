@@ -73,11 +73,11 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(MemberRequest $request)
+    public function update(MemberRequest $request, $id)
     {
         $data = $request->all();
         $image = $request->file('image');
-        
+
         if ($image != '') {
             $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
             request()->image->storeAs('/public/images', $imageMem);
@@ -90,7 +90,7 @@ class MemberController extends Controller
             unset($data['password']);
         }
 
-        Member::findOrFail()->update($data);
+        Member::findOrFail($id)->update($data);
         return redirect()->route('members.index')->with('success', __('messages.update'));
     }
 
