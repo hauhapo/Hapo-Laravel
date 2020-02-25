@@ -29,7 +29,7 @@
 
         <div class="col-md-6">
             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-                value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="email">
+                value="{{ (old('email')) ? old('email') : $member->email }}"  autocomplete="email">
 
             @error('email')
             <span class="invalid-feedback" role="alert">
@@ -68,7 +68,7 @@
 
         <div class="col-md-6">
             <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
-                value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="phone" autofocus>
+                value="{{ (old('phone')) ? old('phone') : $member->phone }}" required autocomplete="phone" autofocus>
 
             @error('phone')
             <span class="invalid-feedback" role="alert">
@@ -83,7 +83,7 @@
 
         <div class="col-md-6">
             <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address"
-                value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="address" autofocus>
+                value="{{ (old('address')) ? old('address') : $member->address }}" required autocomplete="address" autofocus>
 
             @error('address')
             <span class="invalid-feedback" role="alert">
@@ -98,9 +98,8 @@
 
         <div class="col-md-6">
             <select name="is_admin" type="number" class="form-control @error('is_admin') is-invalid @enderror"
-                name="is_admin" value="{{ (old('name')) ? old('name') : $member->name }}" required autocomplete="is_admin" autofocus>
+                name="is_admin" value="{{ (old('is_admin')) ? old('is_admin') : $member->is_admin }}" required autocomplete="is_admin" autofocus>
                 @foreach (App\Models\Member::IS_ADMIN as $key => $label)
-                {{-- <option value="{{ $key }}">{{ $label }}</option> --}}
                 <option value="{{ $key }}" @if(old('is_admin') == $key) selected @elseif($member->is_admin == $key) selected @endif>{{ $label }}</option>
                 @endforeach
             </select>
@@ -119,7 +118,8 @@
             <input id="email" type="file" class="form-control-file @error('image') is-invalid @enderror" name="image"
                 value="" autocomplete="image">
             <img class="w-25" src="{{ asset("storage/images/$member->image") }}" alt="image" />
-            <input type="hidden" name="hidden_image" value="{{ (old('name')) ? old('name') : $member->name }}">
+            <input type="hidden" name="hidden_image" value="{{ $member->image }}">
+            
 
             @error('image')
             <span class="invalid-feedback" role="alert">

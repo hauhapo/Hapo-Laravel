@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use App\Http\Requests\MemberRequest;
+use App\Http\Requests\UpdateMemberRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -73,15 +74,18 @@ class MemberController extends Controller
      * @param  \App\Member  $member
      * @return \Illuminate\Http\Response
      */
-    public function update(MemberRequest $request, $id)
+    public function update(UpdateMemberRequest $request, $id)
     {
         $data = $request->all();
         $image = $request->file('image');
 
-        if ($image != '') {
+        if (!empty($image)) {
             $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
             request()->image->storeAs('/public/images', $imageMem);
             $data['image'] = $imageMem;
+        }
+        else {
+            unset($data['image']);
         }
         
         if (isset($data['password'])) {
