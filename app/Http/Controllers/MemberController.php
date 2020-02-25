@@ -42,9 +42,9 @@ class MemberController extends Controller
     public function store(MemberRequest $request)
     {
         $data = $request->all();
-        $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
-        request()->image->storeAs('public/images', $imageMem);
-        $data['image'] = $imageMem;
+        $imageMember = uniqid() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs('public/images', $imageMember);
+        $data['image'] = $imageMember;
         $data['password'] = Hash::make($data['password']);
         Member::create($data);
         return redirect()->route('members.index')->with('success', __('messages.create'));
@@ -80,9 +80,9 @@ class MemberController extends Controller
         $image = $request->file('image');
 
         if (!empty($image)) {
-            $imageMem = uniqid() . '.' . request()->image->getClientOriginalExtension();
-            request()->image->storeAs('/public/images', $imageMem);
-            $data['image'] = $imageMem;
+            $imageMember = uniqid() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->storeAs('/public/images', $imageMember);
+            $data['image'] = $imageMember;
         }
         else {
             unset($data['image']);
