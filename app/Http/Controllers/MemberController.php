@@ -83,8 +83,7 @@ class MemberController extends Controller
             $imageMember = uniqid() . '.' . request()->image->getClientOriginalExtension();
             request()->image->storeAs('/public/images', $imageMember);
             $data['image'] = $imageMember;
-        }
-        else {
+        } else {
             unset($data['image']);
         }
         
