@@ -24,3 +24,11 @@ Route::prefix('members')->name('members.')->group(function() {
 Route::resource('members', 'MemberController', [
 	'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
 ]);
+
+Route::prefix('customer')->name('customer.')->group(function() {
+	Route::get('search', 'CustomerController@index')->name('search');
+});
+
+Route::resource('customer', 'CustomerController', [
+	'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
+]);
