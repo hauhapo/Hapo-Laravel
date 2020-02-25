@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Customer;
-use App\Customers;
+use App\Http\Requests\StoreCustomerRequest;
+use App\Http\Requests\UpdateCustomerRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -12,9 +15,11 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $customers = Customer::search($request)
+            ->paginate(config('app.pageCustomer'));
+        return view('customers.index', ['customers' => $customers]);
     }
 
     /**
@@ -24,7 +29,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -33,20 +38,14 @@ class CustomerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCustomerRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Customer $customer)
-    {
-        //
+        $data = $request->all();
+        $imageCustomer = uniqid() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs('public/images', $imageCustomer);
+        $data['image'] = $imageCustomer;
+        Customer::create($data);
+        return redirect()->route('customer.index')->with('success', __('messages.create'));
     }
 
     /**
@@ -55,9 +54,9 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Customer $customer)
+    public function edit($id)
     {
-        //
+        return view('customers.edit')->with('customer', Customer::findOrFail($id));
     }
 
     /**
@@ -67,9 +66,21 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(UpdateCustomerRequest $request, $id)
     {
-        //
+        $data = $request->all();
+        $image = $request->file('image');
+
+        if (!empty($image)) {
+            $imageCustomer = uniqid() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->storeAs('/public/images', $imageCustomer);
+            $data['image'] = $imageCustomer;
+        } else {
+            unset($data['image']);
+        }
+
+        Customer::findOrFail($id)->update($data);
+        return redirect()->route('customer.index')->with('success', __('messages.update'));
     }
 
     /**
@@ -78,8 +89,10 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy($id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+        return redirect()->route('customer.index')->with('success', __('messages.destroy'));
     }
 }
