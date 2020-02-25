@@ -1,7 +1,7 @@
-mesages.php<?php
+<?php
 
 return [
-    'create' => 'Member created successfully',
-    'update' => 'Member updated successfully',
-    'delete' => 'Member deleted successfully',
+    'create' => 'Created successfully',
+    'update' => 'Updated successfully',
+    'delete' => 'Deleted successfully',
 ];

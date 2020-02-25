@@ -18,8 +18,7 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $customers = Customer::search($request)
-            ->searchRole($request)
-            ->paginate(config('app.pagination'));
+            ->paginate(config('app.pageCustomer'));
         return view('customers.index', ['customers' => $customers]);
     }
 
@@ -45,9 +44,8 @@ class CustomerController extends Controller
         $imageCustomer = uniqid() . '.' . request()->image->getClientOriginalExtension();
         request()->image->storeAs('public/images', $imageCustomer);
         $data['image'] = $imageCustomer;
-        $data['password'] = Hash::make($data['password']);
         Customer::create($data);
-        return redirect()->route('customers.index')->with('success', __('messages.create'));
+        return redirect()->route('customer.index')->with('success', __('messages.create'));
     }
 
     /**
@@ -58,7 +56,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        return view('customers.edit')->with('Customer', Customer::findOrFail($id));
+        return view('customers.edit')->with('customer', Customer::findOrFail($id));
     }
 
     /**
@@ -81,14 +79,8 @@ class CustomerController extends Controller
             unset($data['image']);
         }
 
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        } else {
-            unset($data['password']);
-        }
-
         Customer::findOrFail($id)->update($data);
-        return redirect()->route('customers.index')->with('success', __('messages.update'));
+        return redirect()->route('customer.index')->with('success', __('messages.update'));
     }
 
     /**
@@ -97,7 +89,7 @@ class CustomerController extends Controller
      * @param  \App\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer, $id)
+    public function destroy($id)
     {
         $customer = Customer::findOrFail($id);
         $customer->delete();
