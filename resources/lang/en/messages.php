@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'create' => 'Created successfully',
-    'update' => 'Updated successfully',
+    'create' => 'Added successfully',
+    'update' => 'Edited successfully',
     'delete' => 'Deleted successfully',
 ];

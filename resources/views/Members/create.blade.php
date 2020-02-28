@@ -6,7 +6,7 @@
         <div class="pull-left">
             <h2>Add New Members</h2>
         </div>
-        <div class="pb-3 pull-right">
+        <div class="d-flex justify-content-end">
             <a class="btn btn-warning" href="{{ route('members.index') }}"> Back</a>
         </div>
     </div>

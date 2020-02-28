@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div align="right">
+<div class="d-flex justify-content-end">
     <a href="{{ route('members.index') }}" class="btn btn-warning">Back</a>
 </div>
 <br />

@@ -107,6 +107,6 @@ class MemberController extends Controller
     {
         $member = Member::findOrFail($id);
         $member->delete();
-        return redirect()->route('member.index')->with('success', __('messages.destroy'));
+        return redirect()->route('members.index')->with('success', __('messages.delete'));
     }
 }
