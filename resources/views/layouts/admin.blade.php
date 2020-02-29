@@ -15,6 +15,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -37,17 +39,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
 
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                        aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
 
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
@@ -88,7 +79,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="/home" class="brand-link">
                 <img src="{{asset('dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">Hapo Manage</span>
@@ -103,7 +94,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">ROBOT</a>
+                        <a href="#" role="button" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
                     </div>
                 </div>
 
@@ -117,10 +110,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="#" class="nav-link active">
                                 <i class="fa fa-bar"></i>
                                 <p>
+                                    <i class="fas fa-home"></i>
                                     Manage
                                     <i class="right fa fa-angle-left"></i>
                                 </p>
                             </a>
+
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('members.index') }}" class="nav-link active">
@@ -135,15 +130,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('project.index') }}" class="nav-link">
                                         <i class="fas fa-layer-group"></i>
                                         <p>Projects</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('task.index') }}" class="nav-link">
                                         <i class="fas fa-tasks"></i>
                                         <p>Tasks</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('status.index') }}" class="nav-link">
+                                        <i class="fas fa-smoking"></i>
+                                        <p>Status</p>
                                     </a>
                                 </li>
                             </ul>
@@ -158,21 +159,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0 text-dark"></h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Starter Page</li>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
+
             <!-- /.content-header -->
 
             <!-- Main content -->
@@ -196,7 +183,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
+    {{-- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script> --}}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        $('#datepicker').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+         });
 
+        $(document).ready(function() {
+            $('#mti').select2();
+        }); 
+    </script>
     <!-- REQUIRED SCRIPTS -->
     <script src="{{ mix('/js/app.js') }}"></script>
 </body>

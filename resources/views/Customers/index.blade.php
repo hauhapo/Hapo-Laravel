@@ -2,24 +2,32 @@
 
 @section('content')
 
+<div class="w-100 pb-3 d-flex justify-content-center">
+    <i class="fa fa-users-cog fa-2x"></i>
+    <h2 class="ml-1">Manage Customers</h2>
+</div>
+
 <div class="d-flex">
     <form class="form-inline" method="get" action="{{ route('customer.search') }}">
-        <input class="form-control" type="text" placeholder="Name" aria-label="Search" name="searchName"></th>
-        <input class="form-control" type="text" placeholder="Email" aria-label="Search" name="searchEmail"></th>
-        <input class="form-control" type="text" placeholder="Phone" aria-label="Search" name="searchPhone"></th>
-        <button type="submit" class="btn btn-outline-primary"> <i class="fa fa-search"></i>
+        <input class="form-control" type="text" value="{{ request()->input('searchName') }}" placeholder="Name" aria-label="Search" name="searchName">
+        <input class="form-control ml-3" type="text" value="{{ request()->input('searchEmail') }}" placeholder="Email" aria-label="Search" name="searchEmail">
+        <input class="form-control ml-3" type="text" value="{{ request()->input('searchPhone') }}" placeholder="Phone" aria-label="Search" name="searchPhone">
+        <button type="submit" class="btn btn-outline-success ml-3"> <i class="fa fa-search"></i>
             Search</button>
     </form>
 </div>
 
-<div class="d-flex justify-content-end">
-    <a class="btn btn-success" href="{{ route('customer.create') }}"> Add customers</a>
+<div class="w-100 d-flex text-center mt-2">
     @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;
         </a> {{ session('success') }}
     </div>
     @endif
+</div>
+
+<div class="d-flex justify-content-end mb-3">
+    <a class="btn btn-success" href="{{ route('customer.create') }}"> Add customers</a>
 </div>
 
 <div class="table-responsive">
@@ -34,7 +42,8 @@
         </tr>
         @foreach($customers as $row)
         <tr>
-            <td><img src="{{ asset("storage/images/$row->image") }}" style=" height: 50px; object-fit: contain;" alt = "avatar"></td>
+            <td><img src="{{ asset("storage/images/$row->image") }}" style=" height: 50px; object-fit: contain;"
+                    alt="avatar"></td>
             <td>{{ $row->name }}</td>
             <td>{{ $row->email }}</td>
             <td>{{ $row->phone }}</td>

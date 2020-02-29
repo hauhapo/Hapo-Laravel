@@ -6,7 +6,7 @@
         <div class="pull-left">
             <h2>Add customers</h2>
         </div>
-        <div class="pb-3 pull-right">
+        <div class="pb-3 d-flex justify-content-end">
             <a class="btn btn-warning" href="{{ route('customer.index') }}"> Back</a>
         </div>
     </div>
@@ -80,7 +80,7 @@
         <label for="image" class="col-md-4 col-form-label text-md-right">{{ __('Image') }}</label>
 
         <div class="col-md-6">
-            <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image"
+            <input id="image" type="file" class="form-control-file @error('image') is-invalid @enderror" name="image"
                 value="{{ old('image') }}" required autocomplete="image" autofocus>
 
             @error('image')
@@ -90,6 +90,7 @@
             @enderror
         </div>
     </div>
+
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-success">Submit</button>
     </div>

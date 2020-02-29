@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProjectRequest;
+use App\Models\Project;
+use App\tasks;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -11,9 +14,11 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $tasks = Project::search($request)
+            ->paginate(config('app.pagination'));
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
     /**
@@ -23,7 +28,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -32,53 +37,45 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
-    {
-        //
+        Project::create($request->all());
+        return redirect()->route('project.index')->with('success', __('messages.create'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Task  $task
+     * @param  \App\project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit($id)
     {
-        //
+        return view('tasks.edit')->with('project', project::findOrFail($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Task  $task
+     * @param  \App\project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(StoreProjectRequest $request, $id)
     {
-        //
+        return redirect()->route('project.index')->with('success', __('messages.update'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Task  $task
+     * @param  \App\project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $project->delete();
+        return redirect()->route('project.index')->with('success', __('messages.delete'));
     }
 }

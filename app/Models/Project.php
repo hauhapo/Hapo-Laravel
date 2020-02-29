@@ -6,7 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $fillable = ['name', 'description', 'start_time', 'end_time'];
+    protected $fillable = ['name', 'status_id', 'leader', 'start_time', 'end_time', 'customer'];
+
+    public function scopeSearch($query, $request)
+    {
+    	return $query->searchName($request)
+    		->searchEmail($request)
+            ->searchPhone($request);
+    }
+
+    public function scopeSearchName($query, $request)
+    {
+        return $query->where('name', 'like', '%' . $request->keySearch . '%');
+    }
+
+    public function scopeSearchEmail($query, $request)
+    {
+        return $query->orWhere('status_id', 'like', '%' . $request->keySearch . '%');
+    }
+
+    public function scopeSearchPhone($query, $request)
+    {
+        return $query->orWhere('customer_id', 'like', '%' . $request->keySearch . '%');
+    }
 
     public function members()
     {

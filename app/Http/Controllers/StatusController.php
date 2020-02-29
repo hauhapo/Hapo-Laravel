@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\StoreStatusRequest;
 use App\Models\Status;
-use App\Statuses;
 use Illuminate\Http\Request;
 
 class StatusController extends Controller
@@ -12,9 +13,11 @@ class StatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $status = Status::search($request)
+            ->paginate(config('app.pagination'));
+        return view('status.index', ['status' => $status]);
     }
 
     /**
@@ -24,7 +27,7 @@ class StatusController extends Controller
      */
     public function create()
     {
-        //
+        return view('status.create');
     }
 
     /**
@@ -33,9 +36,10 @@ class StatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStatusRequest $request)
     {
-        //
+        Status::create($request->all());
+        return redirect()->route('status.index')->with('success', __('messages.create'));
     }
 
     /**
@@ -44,9 +48,9 @@ class StatusController extends Controller
      * @param  \App\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function show(Status $status)
+    public function show(Status $status, $id)
     {
-        //
+
     }
 
     /**
@@ -55,9 +59,9 @@ class StatusController extends Controller
      * @param  \App\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function edit(Status $status)
+    public function edit($id)
     {
-        //
+        return view('status.edit')->with('status', Status::findOrFail($id));
     }
 
     /**
@@ -67,9 +71,11 @@ class StatusController extends Controller
      * @param  \App\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Status $status)
+    public function update(StoreStatusRequest $request, $id)
     {
-        //
+        $status = Status::findOrFail($id);
+        $status->update($request->all());
+        return redirect()->route('status.index')->with('success', __('messages.update'));
     }
 
     /**
@@ -78,8 +84,10 @@ class StatusController extends Controller
      * @param  \App\Status  $status
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Status $status)
+    public function destroy($id)
     {
-        //
+        $status = Status::findOrFail($id);
+        $status->delete();
+        return redirect()->route('status.index')->with('success', __('messages.delete'));
     }
 }

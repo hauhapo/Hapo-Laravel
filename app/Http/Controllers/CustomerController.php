@@ -6,7 +6,6 @@ use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -18,7 +17,7 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $customers = Customer::search($request)
-            ->paginate(config('app.pageCustomer'));
+            ->paginate(config('app.pagination'));
         return view('customers.index', ['customers' => $customers]);
     }
 
@@ -93,6 +92,6 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail($id);
         $customer->delete();
-        return redirect()->route('customer.index')->with('success', __('messages.destroy'));
+        return redirect()->route('customer.index')->with('success', __('messages.delete'));
     }
 }
