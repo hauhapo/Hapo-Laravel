@@ -18,8 +18,8 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $members = Member::search($request)
-            ->searchRole($request)
-            ->paginate(config('app.pagination'));
+        ->searchRole($request)
+        ->paginate(config('app.pagination'));
         return view('members.index', ['members' => $members]);
     }
 

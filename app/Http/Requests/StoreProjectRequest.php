@@ -25,9 +25,9 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'description' => 'required',
-            'began_at' => 'required',
-            'finished_at' => 'required',
+            'leader' => 'required',
+            'start_time' => 'required',
+            'end_time' => 'required'
         ];
     }
 }

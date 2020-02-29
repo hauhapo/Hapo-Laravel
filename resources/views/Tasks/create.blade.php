@@ -4,15 +4,15 @@
 <div class="row">
     <div class="col-lg-12 margin-tb pb-3">
         <div class="pull-left">
-            <h2>Add projects</h2>
+            <h2>Add tasks</h2>
         </div>
         <div class="d-flex justify-content-end">
-            <a class="btn btn-warning" href="{{ route('project.index') }}"> Back</a>
+            <a class="btn btn-warning" href="{{ route('task.index') }}"> Back</a>
         </div>
     </div>
 </div>
 
-<form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('task.store') }}" method="POST" enctype="multipart/form-data">
 
     @csrf
 
@@ -39,21 +39,6 @@
                 name="status_id" value="{{ old('status_id') }}" required autocomplete="status_id">
 
             @error('status_id')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Leader') }}</label>
-
-        <div class="col-md-6">
-            <input id="leader" type="text" class="form-control @error('leader') is-invalid @enderror" name="leader"
-                value="{{ old('leader') }}" required autocomplete="leader" autofocus>
-
-            @error('leader')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
@@ -91,11 +76,11 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    {{-- <div class="form-group row">
         <label for="mail" class="col-md-4 col-form-label text-md-right">{{ __('Customer') }}</label>
 
         <div class="col-md-6">
-            <select multiple = 'multiple' id="mti"
+            <select multiple = 'multiple' id="customer_id"
                 class="form-control @error('customer_id') is-invalid @enderror" name="customer_id"
                 value="{{ old('customer_id') }}" required autocomplete="customer_id" autofocus>
                 <option>orange</option>
@@ -108,7 +93,7 @@
             </span>
             @enderror
         </div>
-    </div>
+    </div> --}}
 
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-success">Submit</button>

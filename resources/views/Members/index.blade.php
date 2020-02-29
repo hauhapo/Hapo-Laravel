@@ -23,10 +23,10 @@
 
             <div>
                 <select name="searchRole" class="ml-2 form-control col-auto @error('is_admin') is-invalid @enderror"
-                    value="{{ old('is_admin') }}" autocomplete="is_admin">
-                    <option value="" disabled selected hidden>Role</option>
+                    value="{{ old('is_admin') }}" autocomplete="is_admin">              
                     @foreach (App\Models\Member::IS_ADMIN as $key => $value)
-                    <option placeholder="Role" value="{{ $key }}" @if(request('searchRole')==$key) selected @endif>
+                    <option value="" disabled selected>Search Role</option>
+                    <option value="{{ $key }}" @if(request('searchRole')==$key) selected @endif>
                         {{ $value }}
                     </option>
                     @endforeach

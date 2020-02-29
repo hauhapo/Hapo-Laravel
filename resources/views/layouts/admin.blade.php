@@ -136,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('task.index') }}" class="nav-link">
                                         <i class="fas fa-tasks"></i>
                                         <p>Tasks</p>
                                     </a>
@@ -183,17 +183,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-
+    {{-- <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script> --}}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
-    $(document).ready(function() {
-        $('.date').datepicker({  
-           format: 'mm-dd-yyyy'
-         }); 
-         
-        
-       
+        $('#datepicker').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+         });
+
+        $(document).ready(function() {
+            $('#mti').select2();
+        }); 
     </script>
     <!-- REQUIRED SCRIPTS -->
     <script src="{{ mix('/js/app.js') }}"></script>
